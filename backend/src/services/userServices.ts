@@ -34,12 +34,16 @@ export class userServices {
       }
       //checking the loged password with existing password
       const isValidUser = await bcrypt.compare(password, oGUserDoc.password);
-      let token = jwt.sign(
-        { userId: oGUserDoc._id },
-        process.env.JWT_SECRET as string,
-        { expiresIn: "1h" }
-      );
-      return token;
+      if (isValidUser) {
+        let token = jwt.sign(
+          { userId: oGUserDoc._id },
+          process.env.JWT_SECRET as string,
+          { expiresIn: "1h" }
+        );
+        return token;
+      } else {
+        return "credentials are not matched";
+      }
     } catch (err) {
       console.log("error at login servives :", err);
       throw new Error("Error at login services:" + err);

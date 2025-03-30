@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IWorker extends Document {
-  name: string;
+  workerName: string;
   email: string;
   mobile: number;
   password: string;
@@ -15,7 +15,7 @@ export interface IWorker extends Document {
 
 const workerSchema: Schema = new Schema<IWorker>(
   {
-    name: {
+    workerName: {
       type: String,
       required: true,
     },
