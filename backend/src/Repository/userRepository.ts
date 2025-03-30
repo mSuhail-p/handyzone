@@ -11,4 +11,13 @@ export class userRepository {
       throw new Error("Error saving user data:" + err);
     }
   }
+  async loginUser(email: any) {
+    try {
+      let userDoc = await User.findOne({ email: email });
+      return userDoc;
+    } catch (err) {
+      console.log("Error at login repo:", err);
+      throw new Error("Error saving user data:" + err);
+    }
+  }
 }

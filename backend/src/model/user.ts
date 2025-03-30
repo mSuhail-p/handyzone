@@ -26,7 +26,6 @@ const userSchema: Schema = new Schema<IUser>(
     },
     date: {
       type: Date,
-      required: true,
       default: Date.now,
     },
     location: {
