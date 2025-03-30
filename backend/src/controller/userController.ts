@@ -20,6 +20,7 @@ export class usercontroller {
     try {
       const userData = req.body;
       const user = await userService.loginUser(userData);
+      res.status(200).json({ message: "user logined successfully", user });
     } catch (err) {
       console.log("Error on login :", err);
       res.status(500).json({ message: "Error on login " + err });
