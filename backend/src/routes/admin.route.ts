@@ -1,8 +1,9 @@
 import express from "express";
+import { adminControllers } from "../controller/adminController";
 const router = express.Router();
+const adminController = new adminControllers();
 
-router.get("/", (req, res) => {
-  res.send("Admin route is working!");
-});
+ 
+router.patch("/requesedWork/approve", adminController.approveForWorks);
 
 export default router;

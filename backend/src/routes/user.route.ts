@@ -4,7 +4,8 @@ const userController = new usercontroller();
 
 const router = express.Router();
 
-router.post("/login",userController.signinUser)
+router.post("/login", userController.signinUser);
 router.post("/signup", userController.signupUser);
+router.post("/otpVerification", userController.verifyotp);
 
 export default router;

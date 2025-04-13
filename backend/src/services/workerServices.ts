@@ -1,5 +1,6 @@
 import { workerRepository } from "../Repository/workerRepository";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const workerRepo = new workerRepository();
 export class workerServices {
@@ -13,7 +14,12 @@ export class workerServices {
       //Update password on worker data object as hashed one
       workerData.password = hashedPassword;
       const storedWorker = await workerRepo.signUWorker(workerData);
-      return storedWorker;
+      const token = jwt.sign(
+        { workerId: storedWorker._id },
+        process.env.JWT_SECRET as string,
+        { expiresIn: "1h" }
+      );
+      return { token: token, storedWorker };
     } catch (err) {
       console.log("Error on signup worker in worker services:", err);
       throw new Error("Error on signup worker in worker services" + err);
@@ -29,7 +35,12 @@ export class workerServices {
       }
       const passwordMatch = await bcrypt.compare(password, workerDoc.password);
       if (passwordMatch) {
-        return workerDoc._id;
+        const token = jwt.sign(
+          { workerId: workerDoc._id },
+          process.env.JWT_SECRET as string,
+          { expiresIn: "1h" }
+        );
+        return token;
       } else {
         throw { statusCode: 404, message: "credentials are not matched" };
       }
